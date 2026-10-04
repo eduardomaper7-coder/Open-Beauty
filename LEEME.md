@@ -16,4 +16,8 @@ Para publicarla, sube la carpeta completa a cualquier hosting (Netlify, Vercel, 
 2. **Instagram**: añade el enlace real en el pie (`@openbeauty` en `index.html`).
 3. **Textos legales**: completa razón social, NIF, email y nº de registro sanitario en `LEGAL` (`js/main.js`).
 4. **Profesionales**: si el centro cuenta con médico/a, conviene añadirlo (los inyectables en España deben realizarlos médicos en centro sanitario autorizado).
-5. **Reseñas**: si tenéis reseñas de Google, se puede añadir una sección con las reales.
+5. **Antes y después**: las 3 imágenes de `assets/antes-despues/` son de ejemplo. Sustitúyelas por fotos propias de pacientes de Open Beauty (con su consentimiento por escrito), manteniendo los nombres `caso-1.jpg`, `caso-2.jpg`, `caso-3.jpg`.
+   - Cada foto debe llevar el antes y el después juntos en una sola imagen.
+   - En `index.html`, `data-layout="h"` = lado a lado (antes a la izquierda); `data-layout="v"` = uno encima del otro (antes arriba).
+   - Para añadir más casos, copia un bloque `<article class="ba">`. Si una foto no existe, su tarjeta se oculta sola.
+6. **Opiniones**: están en la sección `#opiniones` de `index.html`. Para añadir una, copia un bloque `<article class="review">`.

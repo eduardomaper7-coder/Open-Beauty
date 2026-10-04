@@ -63,6 +63,9 @@
     <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></g></symbol>
     <symbol id="i-phone" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2Z"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></symbol>
+    <symbol id="i-google" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.6 12.3c0-.8-.1-1.5-.2-2.3H12v4.3h5.9a5 5 0 0 1-2.2 3.3v2.8h3.6c2.1-1.9 3.3-4.8 3.3-8.1Z"/><path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.6-2.8c-1 .7-2.2 1.1-3.7 1.1-2.9 0-5.3-1.9-6.2-4.5H2.1v2.9A11 11 0 0 0 12 23Z"/><path fill="#FBBC05" d="M5.8 14.1a6.6 6.6 0 0 1 0-4.2V7H2.1a11 11 0 0 0 0 10l3.7-2.9Z"/><path fill="#EA4335" d="M12 5.4c1.6 0 3.1.6 4.2 1.7l3.2-3.2A11 11 0 0 0 2.1 7l3.7 2.9C6.7 7.3 9.1 5.4 12 5.4Z"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-ig" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></g></symbol>
   </defs>
 </svg>
@@ -87,7 +90,7 @@
     <nav class="nav" id="nav" aria-label="Navegación principal">
       <a href="#tratamientos">Tratamientos</a>
       <a href="#armonizacion">Armonización</a>
-      <a href="#piel">Piel</a>
+      <a href="#resultados">Resultados</a>
       <a href="#metodo">Cómo trabajamos</a>
       <a href="#faq">Preguntas</a>
       <a href="#contacto">Contacto</a>
@@ -121,7 +124,7 @@
       <ul class="hero__trust reveal">
         <li><svg><use href="#i-check"/></svg> Valoración sin coste</li>
         <li><svg><use href="#i-check"/></svg> Plan 100% personalizado</li>
-        <li><svg><use href="#i-check"/></svg> Respuesta rápida por WhatsApp</li>
+        <li class="hero__rating"><span class="stars" aria-hidden="true"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span> <a href="#opiniones">5,0 en Google</a></li>
       </ul>
     </div>
 
@@ -296,6 +299,64 @@
   </div>
 </section>
 
+<!-- ===================== ANTES Y DESPUÉS ===================== -->
+<section class="section" id="resultados">
+  <div class="container">
+    <header class="section__head reveal">
+      <p class="kicker">resultados reales</p>
+      <h2 class="h2">Antes <strong>y después</strong></h2>
+      <p class="section__lead">Desliza sobre cada imagen para comparar. Cambios visibles, pero siempre naturales: que te veas tú, en tu mejor versión.</p>
+    </header>
+
+    <!--
+      CÓMO AÑADIR UN CASO:
+      1. Guarda la foto (antes y después en una sola imagen) en assets/antes-despues/
+      2. Copia un <article class="ba"> y cambia:
+         data-img    → ruta de la foto
+         data-layout → "h" si están lado a lado (antes a la izquierda)
+                       "v" si están una encima de otra (antes arriba)
+    -->
+    <div class="ba-grid" id="baGrid">
+      <article class="ba reveal" data-img="assets/antes-despues/caso-1.jpg" data-layout="h">
+        <div class="ba__frame">
+          <div class="ba__img ba__img--before"></div>
+          <div class="ba__img ba__img--after"></div>
+          <span class="ba__tag ba__tag--before">Antes</span>
+          <span class="ba__tag ba__tag--after">Después</span>
+          <div class="ba__handle" aria-hidden="true"><span><svg><use href="#i-chev"/></svg><svg><use href="#i-chev"/></svg></span></div>
+          <input class="ba__range" type="range" min="0" max="100" value="50" aria-label="Comparar antes y después: labios">
+        </div>
+        <div class="ba__info"><h3>Labios</h3><p>Hidratación y volumen con ácido hialurónico</p></div>
+      </article>
+
+      <article class="ba reveal" data-img="assets/antes-despues/caso-2.jpg" data-layout="h">
+        <div class="ba__frame">
+          <div class="ba__img ba__img--before"></div>
+          <div class="ba__img ba__img--after"></div>
+          <span class="ba__tag ba__tag--before">Antes</span>
+          <span class="ba__tag ba__tag--after">Después</span>
+          <div class="ba__handle" aria-hidden="true"><span><svg><use href="#i-chev"/></svg><svg><use href="#i-chev"/></svg></span></div>
+          <input class="ba__range" type="range" min="0" max="100" value="50" aria-label="Comparar antes y después: armonización facial">
+        </div>
+        <div class="ba__info"><h3>Armonización facial</h3><p>Pómulos, surcos y óvalo facial</p></div>
+      </article>
+
+      <article class="ba reveal" data-img="assets/antes-despues/caso-3.jpg" data-layout="h">
+        <div class="ba__frame">
+          <div class="ba__img ba__img--before"></div>
+          <div class="ba__img ba__img--after"></div>
+          <span class="ba__tag ba__tag--before">Antes</span>
+          <span class="ba__tag ba__tag--after">Después</span>
+          <div class="ba__handle" aria-hidden="true"><span><svg><use href="#i-chev"/></svg><svg><use href="#i-chev"/></svg></span></div>
+          <input class="ba__range" type="range" min="0" max="100" value="50" aria-label="Comparar antes y después: ojeras">
+        </div>
+        <div class="ba__info"><h3>Ojeras</h3><p>Surco lagrimal y calidad de piel</p></div>
+      </article>
+    </div>
+    <p class="ba-note">Imágenes de pacientes de Open Beauty publicadas con su consentimiento. Los resultados pueden variar de una persona a otra.</p>
+  </div>
+</section>
+
 <!-- ===================== PROMO VALORACIÓN ===================== -->
 <section class="promo">
   <div class="container promo__grid">
@@ -390,6 +451,68 @@
       <li class="reveal"><span>✦</span><div><h3>Transparencia</h3><p>Presupuesto claro desde la primera visita. Sin sorpresas.</p></div></li>
       <li class="reveal"><span>✦</span><div><h3>En el corazón de Chamartín</h3><p>Un espacio tranquilo y cuidado en Av. de Alfonso XIII, 151.</p></div></li>
     </ul>
+  </div>
+</section>
+
+<!-- ===================== OPINIONES GOOGLE ===================== -->
+<section class="section section--soft" id="opiniones">
+  <div class="container">
+    <div class="reviews__head reveal">
+      <div>
+        <p class="kicker">lo que dicen de nosotras</p>
+        <h2 class="h2">Opiniones <strong>reales</strong></h2>
+      </div>
+      <a class="gscore" href="https://www.google.com/maps/search/?api=1&query=Open+Beauty+Av.+de+Alfonso+XIII+151+Madrid" target="_blank" rel="noopener">
+        <svg class="gscore__g"><use href="#i-google"/></svg>
+        <span class="gscore__num">5,0</span>
+        <span class="gscore__meta"><span class="stars"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span><small>Valoración en Google</small></span>
+      </a>
+    </div>
+
+    <div class="reviews reveal" id="reviews" aria-roledescription="carrusel" aria-label="Opiniones de Google">
+      <div class="reviews__track" id="reviewsTrack">
+        <article class="review">
+          <div class="review__top"><span class="stars" aria-label="5 de 5 estrellas"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span><svg class="review__g" aria-hidden="true"><use href="#i-google"/></svg></div>
+          <blockquote>“El tratamiento que me he hecho ha resultado una experiencia muy agradable, en gran parte por las profesionales que me han atendido. Gracias Milena y Andrea por el trato recibido y también por vuestra gran simpatía. He disfrutado el rato con vosotras.”</blockquote>
+          <footer class="review__author"><span class="review__avatar">D</span><span><strong>David</strong><small>Tratamiento facial</small></span></footer>
+        </article>
+        <article class="review">
+          <div class="review__top"><span class="stars" aria-label="5 de 5 estrellas"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span><svg class="review__g" aria-hidden="true"><use href="#i-google"/></svg></div>
+          <blockquote>“Encantada con el trato de Milena y Andrea y con el resultado del ácido hialurónico en las patas de gallo y los labios. Si repito, ¡lo haré con ellas!”</blockquote>
+          <footer class="review__author"><span class="review__avatar">L</span><span><strong>Laura</strong><small>Ácido hialurónico</small></span></footer>
+        </article>
+        <article class="review">
+          <div class="review__top"><span class="stars" aria-label="5 de 5 estrellas"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span><svg class="review__g" aria-hidden="true"><use href="#i-google"/></svg></div>
+          <blockquote>“Me hice un hydrafacial con Andrea y no puedo estar más contenta. Es una gran profesional, sabe muchísimo y me lo hizo con mucho cuidado y delicadeza. Volveré. Gracias.”</blockquote>
+          <footer class="review__author"><span class="review__avatar">C</span><span><strong>Cris</strong><small>Hydrafacial</small></span></footer>
+        </article>
+        <article class="review">
+          <div class="review__top"><span class="stars" aria-label="5 de 5 estrellas"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span><svg class="review__g" aria-hidden="true"><use href="#i-google"/></svg></div>
+          <blockquote>“Me puse relleno de pómulos. La Dra. súper delicada, te lo explica muy bien, y la persona que la ayuda un encanto.”</blockquote>
+          <footer class="review__author"><span class="review__avatar">A</span><span><strong>Ana</strong><small>Pómulos</small></span></footer>
+        </article>
+        <article class="review">
+          <div class="review__top"><span class="stars" aria-label="5 de 5 estrellas"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span><svg class="review__g" aria-hidden="true"><use href="#i-google"/></svg></div>
+          <blockquote>“Muy contenta con la limpieza facial que me hizo Andrea. Con mucho cuidado y delicadeza. Me quedó la piel muy bien y una sensación muy agradable. ¡Muchísimas gracias!”</blockquote>
+          <footer class="review__author"><span class="review__avatar">C</span><span><strong>Carolina</strong><small>Limpieza facial</small></span></footer>
+        </article>
+        <article class="review">
+          <div class="review__top"><span class="stars" aria-label="5 de 5 estrellas"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span><svg class="review__g" aria-hidden="true"><use href="#i-google"/></svg></div>
+          <blockquote>“Excepcional el servicio y trato de Andrea. Hemos repetido con el tratamiento y seguiremos haciéndolo. Recomendable 100%.”</blockquote>
+          <footer class="review__author"><span class="review__avatar">J</span><span><strong>Javier</strong><small>Tratamiento facial</small></span></footer>
+        </article>
+        <article class="review">
+          <div class="review__top"><span class="stars" aria-label="5 de 5 estrellas"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span><svg class="review__g" aria-hidden="true"><use href="#i-google"/></svg></div>
+          <blockquote>“Excelente servicio, me realicé una limpieza facial con Andrea. Una chica con muy buen trato y atención de primera. Lo recomiendo.”</blockquote>
+          <footer class="review__author"><span class="review__avatar">A</span><span><strong>Andrés</strong><small>Limpieza facial</small></span></footer>
+        </article>
+      </div>
+    </div>
+    <div class="reviews__nav">
+      <button class="reviews__btn" id="revPrev" aria-label="Opinión anterior"><svg><use href="#i-chev"/></svg></button>
+      <div class="reviews__dots" id="revDots" role="tablist"></div>
+      <button class="reviews__btn reviews__btn--next" id="revNext" aria-label="Opinión siguiente"><svg><use href="#i-chev"/></svg></button>
+    </div>
   </div>
 </section>
 
@@ -521,6 +644,7 @@
         <li><a href="#tratamientos">Labios y pómulos</a></li>
         <li><a href="#armonizacion">Armonización facial</a></li>
         <li><a href="#piel">Microneedling · Peeling · PRP</a></li>
+        <li><a href="#resultados">Antes y después</a></li>
       </ul>
     </div>
     <div>

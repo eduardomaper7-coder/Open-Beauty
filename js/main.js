@@ -151,6 +151,85 @@
   const initial = $('.spot[data-zone="labios"]');
   initial && initial.classList.add('is-active');
 
+
+  /* ---------- Antes y después (comparador) ---------- */
+  $$('.ba').forEach(card => {
+    const src = card.dataset.img;
+    const layout = card.dataset.layout === 'v' ? 'v' : 'h';
+    const frame = $('.ba__frame', card);
+    const range = $('.ba__range', card);
+    $$('.ba__img', card).forEach(el => { el.style.backgroundImage = `url("${src}")`; });
+    // proporción de cada mitad según la foto real
+    const img = new Image();
+    img.onload = () => {
+      const w = layout === 'h' ? img.naturalWidth / 2 : img.naturalWidth;
+      const h = layout === 'v' ? img.naturalHeight / 2 : img.naturalHeight;
+      frame.style.setProperty('--ar', `${w} / ${h}`);
+    };
+    img.onerror = () => { card.style.display = 'none'; };
+    img.src = src;
+    const set = v => frame.style.setProperty('--pos', v + '%');
+    range.addEventListener('input', () => set(range.value));
+    set(range.value);
+  });
+  // pequeña animación de "pista" la primera vez que se ve
+  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const hint = new IntersectionObserver((ents, obs) => ents.forEach(en => {
+      if (!en.isIntersecting) return;
+      obs.unobserve(en.target);
+      const f = $('.ba__frame', en.target), r = $('.ba__range', en.target);
+      const seq = [50, 30, 70, 50]; let i = 0;
+      const step = () => { if (i >= seq.length) { f.style.transition = ''; return; } const v = seq[i++]; r.value = v; f.style.transition = '--pos .5s'; f.style.setProperty('--pos', v + '%'); setTimeout(step, 450); };
+      setTimeout(step, 600);
+    }), { threshold: 0.6 });
+    $$('.ba').forEach(c => hint.observe(c));
+  }
+
+  /* ---------- Opiniones (carrusel automático) ---------- */
+  (function reviewsCarousel() {
+    const wrap = $('#reviews'), track = $('#reviewsTrack');
+    if (!wrap || !track) return;
+    const items = $$('.review', track);
+    const dotsBox = $('#revDots');
+    let index = 0, timer = null;
+    const perView = () => window.innerWidth <= 640 ? 1 : window.innerWidth <= 1100 ? 2 : 3;
+    const maxIndex = () => Math.max(0, items.length - perView());
+    function renderDots() {
+      dotsBox.innerHTML = '';
+      for (let i = 0; i <= maxIndex(); i++) {
+        const b = document.createElement('button');
+        b.setAttribute('aria-label', 'Ir a la opinión ' + (i + 1));
+        b.addEventListener('click', () => { go(i); restart(); });
+        dotsBox.appendChild(b);
+      }
+    }
+    function go(i) {
+      const m = maxIndex();
+      index = i > m ? 0 : i < 0 ? m : i;
+      track.style.transform = `translateX(-${index * (100 / perView())}%)`;
+      $$('button', dotsBox).forEach((d, k) => d.classList.toggle('is-active', k === index));
+    }
+    // el desplazamiento se calcula sobre el ancho del track = ancho visible
+    track.style.width = '100%';
+    const restart = () => { clearInterval(timer); timer = setInterval(() => go(index + 1), 5500); };
+    $('#revNext').addEventListener('click', () => { go(index + 1); restart(); });
+    $('#revPrev').addEventListener('click', () => { go(index - 1); restart(); });
+    wrap.addEventListener('mouseenter', () => clearInterval(timer));
+    wrap.addEventListener('mouseleave', restart);
+    // gesto táctil
+    let x0 = null;
+    wrap.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; clearInterval(timer); }, { passive: true });
+    wrap.addEventListener('touchend', e => {
+      if (x0 === null) return;
+      const dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 40) go(index + (dx < 0 ? 1 : -1));
+      x0 = null; restart();
+    });
+    let rw;
+    window.addEventListener('resize', () => { clearTimeout(rw); rw = setTimeout(() => { renderDots(); go(Math.min(index, maxIndex())); }, 150); });
+    renderDots(); go(0); restart();
+  })();
+
   /* ---------- FAQ: solo una abierta ---------- */
   const accs = $$('.acc');
   accs.forEach(d => d.addEventListener('toggle', () => {
