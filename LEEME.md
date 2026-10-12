@@ -6,7 +6,7 @@ Para publicarla, sube la carpeta completa a cualquier hosting (Netlify, Vercel, 
 ## Estructura
 - `index.html` – contenido y secciones
 - `css/styles.css` – estilos (colores y tipografías en `:root`, al principio)
-- `js/main.js` – WhatsApp, horario, textos del mapa facial (`ZONES`) y textos legales (`LEGAL`)
+- `js/main.js` – formulario (FormSubmit → openbeautybymg@gmail.com), horario, textos del mapa facial (`ZONES`) y textos legales (`LEGAL`)
 - `assets/logo.svg`, `assets/logo-white.svg` – logo vectorizado
 - `assets/img/` – fotos, mármol, favicon
 - `assets/fonts/` – tipografías Lato y Sacramento (alojadas en local, sin Google Fonts)

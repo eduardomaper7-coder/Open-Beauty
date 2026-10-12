@@ -6,7 +6,7 @@
 
   /* ---------- CONFIGURACIÓN (edita aquí) ---------- */
   const CONFIG = {
-    whatsapp: '34608410097',                // con prefijo de país, sin + ni espacios
+    email: 'openbeautybymg@gmail.com',      // destino del formulario (FormSubmit)
     hours: [[10, 0, 14, 0], [16, 0, 20, 0]], // franjas L–V (hora inicio, min, hora fin, min)
     openDays: [1, 2, 3, 4, 5],               // 1 = lunes … 5 = viernes
     timezone: 'Europe/Madrid'
@@ -28,34 +28,35 @@
 
   /* Textos legales: COMPLETAR con los datos reales de la empresa */
   const LEGAL = {
-    aviso: { t: 'Aviso legal', b: '<p>Titular: [Razón social] · NIF: [NIF] · Domicilio: Av. de Alfonso XIII, 151, 28016 Madrid · Contacto: WhatsApp 608 41 00 97.</p><p>[Nº de registro sanitario del centro, si procede].</p><p>La información de esta web es orientativa y no sustituye a una valoración profesional individualizada.</p>' },
-    privacidad: { t: 'Política de privacidad', b: '<p>Responsable: [Razón social]. Finalidad: atender tu solicitud de información o cita. Legitimación: tu consentimiento. Los datos que escribes en el formulario no se almacenan en esta web: se trasladan a WhatsApp para que tú misma/o envíes el mensaje.</p><p>Puedes ejercer tus derechos de acceso, rectificación, supresión y demás escribiendo a [email de contacto].</p>' },
+    aviso: { t: 'Aviso legal', b: '<p>Titular: [Razón social] · NIF: [NIF] · Domicilio: Av. de Alfonso XIII, 151, 28016 Madrid · Contacto: 608 41 00 97 · openbeautybymg@gmail.com.</p><p>[Nº de registro sanitario del centro, si procede].</p><p>La información de esta web es orientativa y no sustituye a una valoración profesional individualizada.</p>' },
+    privacidad: { t: 'Política de privacidad', b: '<p>Responsable: [Razón social]. Finalidad: atender tu solicitud de información o cita y contactarte por teléfono o email. Legitimación: tu consentimiento. Los datos del formulario se envían por email al centro a través del servicio FormSubmit y no se ceden a terceros.</p><p>Puedes ejercer tus derechos de acceso, rectificación, supresión y demás escribiendo a openbeautybymg@gmail.com.</p>' },
     cookies: { t: 'Política de cookies', b: '<p>Esta web no utiliza cookies propias de seguimiento. El mapa incrustado de Google Maps puede instalar cookies de terceros; consulta la política de Google para más información.</p>' }
   };
 
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
-  const waLink = (msg) => `https://wa.me/${CONFIG.whatsapp}${msg ? '?text=' + encodeURIComponent(msg) : ''}`;
 
-  /* ---------- Enlaces de WhatsApp con mensaje ---------- */
-  function wireWhatsApp(el) {
-    const msg = el.getAttribute('data-wa');
-    el.setAttribute('href', waLink(msg));
-    el.setAttribute('target', '_blank');
-    el.setAttribute('rel', 'noopener');
-  }
-  $$('[data-wa]').forEach(wireWhatsApp);
+  /* ---------- Botones "Consultar" → formulario con el tratamiento marcado ---------- */
+  document.addEventListener('click', e => {
+    const a = e.target.closest('[data-treat]');
+    if (!a) return;
+    const form = $('#bookingForm');
+    if (!form) return;
+    const sel = form.tratamiento;
+    const t = a.getAttribute('data-treat');
+    if (sel && [...sel.options].some(o => o.value === t || o.text === t)) sel.value = t;
+    const zona = a.getAttribute('data-zone-name');
+    if (zona && form.mensaje && !form.mensaje.value.trim()) form.mensaje.value = `Me interesa tratar la zona: ${zona.toLowerCase()}.`;
+  });
 
-  /* ---------- Header al hacer scroll + botón flotante ---------- */
+  /* ---------- Header al hacer scroll ---------- */
   const header = $('#header');
-  const waFloat = $('.wa-float');
   let ticking = false;
   const onScroll = () => {
     const y = window.scrollY;
     // histéresis: evita que la clase cambie una y otra vez cerca del umbral
     if (y > 60) header.classList.add('is-scrolled');
     else if (y < 10) header.classList.remove('is-scrolled');
-    waFloat && waFloat.classList.toggle('is-visible', y > 500);
     ticking = false;
   };
   window.addEventListener('scroll', () => {
@@ -136,8 +137,8 @@
       $('#zoneText').textContent = z.d;
       $('#zoneTx').innerHTML = z.tx.map(t => `<li>${t}</li>`).join('');
       const cta = $('#zoneCta');
-      cta.setAttribute('data-wa', `Hola, me interesa tratar la zona: ${z.t.toLowerCase()}.`);
-      wireWhatsApp(cta);
+      cta.setAttribute('data-zone-name', z.t);
+      cta.setAttribute('data-treat', z.tx[0] || 'Armonización facial');
       zoneBox.classList.remove('is-changing');
     }, 180);
   }
@@ -249,27 +250,42 @@
     const open = CONFIG.openDays.includes(day) &&
       CONFIG.hours.some(([h1, m1, h2, m2]) => mins >= h1 * 60 + m1 && mins < h2 * 60 + m2);
     el.classList.toggle('is-open', open);
-    el.innerHTML = `<i></i> ${open ? 'Abierto ahora · te respondemos enseguida' : 'Ahora cerrado · déjanos tu WhatsApp y te contestamos'}`;
+    el.innerHTML = `<i></i> ${open ? 'Abierto ahora · llámanos y te atendemos' : 'Ahora cerrado · déjanos tus datos y te llamamos'}`;
   })();
 
-  /* ---------- Formulario → WhatsApp ---------- */
+  /* ---------- Formulario → FormSubmit (email) ---------- */
   const form = $('#bookingForm');
-  form && form.addEventListener('submit', e => {
-    e.preventDefault();
-    const err = $('#formError');
-    const data = new FormData(form);
-    const nombre = (data.get('nombre') || '').toString().trim();
-    if (!nombre) { err.textContent = 'Por favor, indícanos tu nombre.'; form.nombre.focus(); return; }
-    if (!form.privacidad.checked) { err.textContent = 'Debes aceptar la política de privacidad.'; return; }
-    err.textContent = '';
-    const mensaje = (data.get('mensaje') || '').toString().trim();
-    const text =
-      `Hola, soy ${nombre}. Me gustaría reservar una valoración gratuita en Open Beauty.\n` +
-      `• Tratamiento: ${data.get('tratamiento')}\n` +
-      `• Preferencia: ${data.get('horario')}` +
-      (mensaje ? `\n• Comentario: ${mensaje}` : '');
-    window.open(waLink(text), '_blank', 'noopener');
-  });
+  if (form) {
+    const thanksUrl = new URL('gracias.html?origen=web', location.href).href;
+    form.querySelector('[name="_next"]').value = thanksUrl;
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const err = $('#formError');
+      const btn = $('#bookingBtn');
+      const nombre = form.nombre.value.trim();
+      const tel = form.telefono.value.replace(/\D/g, '');
+      const email = form.email.value.trim();
+      if (!nombre) { err.textContent = 'Por favor, indícanos tu nombre.'; form.nombre.focus(); return; }
+      if (tel.length < 9) { err.textContent = 'Revisa tu teléfono: necesitamos al menos 9 cifras.'; form.telefono.focus(); return; }
+      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.textContent = 'Revisa el email o déjalo en blanco.'; form.email.focus(); return; }
+      if (!form.privacidad.checked) { err.textContent = 'Debes aceptar la política de privacidad.'; return; }
+      if (form._honey.value) return;
+      err.textContent = '';
+      btn && (btn.disabled = true);
+      const data = new FormData(form);
+      if (!email) data.delete('email'); else data.set('_replyto', email);
+      try {
+        const res = await fetch(`https://formsubmit.co/ajax/${CONFIG.email}`, { method: 'POST', headers: { 'Accept': 'application/json' }, body: data });
+        const json = await res.json().catch(() => ({}));
+        if (!res.ok || String(json.success) === 'false') throw new Error(json.message || 'Error');
+        try { if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead'); } catch (e2) {}
+        try { sessionStorage.setItem('ob_lead', nombre); } catch (e2) {}
+        location.href = thanksUrl;
+      } catch (ex) {
+        form.submit(); // envío clásico; FormSubmit redirige a _next
+      }
+    });
+  }
 
   /* ---------- Modal legal ---------- */
   const modal = $('#legalModal');

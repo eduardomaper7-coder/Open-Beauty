@@ -193,7 +193,17 @@ svg { width: 1em; height: 1em; flex: none; }
 
 .hero__photo { position: absolute; margin: 0; border-radius: 24px; overflow: hidden; box-shadow: var(--shadow); border: 6px solid #fff; background: #fff; }
 .hero__photo img { width: 100%; height: 100%; object-fit: cover; }
-.hero__photo--main { width: 340px; height: 222px; left: 0; bottom: 0; transform: rotate(-3deg); }
+.hero__review {
+  position: absolute; left: 0; bottom: 40px; z-index: 2; display: flex; align-items: center; gap: 12px;
+  padding: 16px 22px; background: #fff; border-radius: 22px; box-shadow: var(--shadow); transform: rotate(-3deg);
+  transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+}
+.hero__review:hover { transform: rotate(-1deg) translateY(-3px); }
+.hero__review-g { font-size: 32px; }
+.hero__review-num { font-size: 40px; font-weight: 900; line-height: 1; color: var(--ink); }
+.hero__review-meta { display: flex; flex-direction: column; gap: 3px; }
+.hero__review-meta .stars svg { font-size: 17px; }
+.hero__review-meta small { font-size: 12.5px; font-weight: 700; color: var(--muted); }
 .hero__photo--small { width: 210px; height: 146px; right: 0; bottom: 30px; transform: rotate(4deg); }
 
 .badge {
@@ -604,7 +614,9 @@ svg { width: 1em; height: 1em; flex: none; }
   .arch__script { font-size: 46px; }
   .badge { width: 104px; height: 104px; left: 0; top: 10px; }
   .badge__v { font-size: 30px; }
-  .hero__photo--main { width: 236px; height: 156px; bottom: 0; }
+  .hero__review { bottom: 0; padding: 12px 16px; gap: 10px; }
+  .hero__review-num { font-size: 32px; }
+  .hero__review-g { font-size: 26px; }
   .hero__photo--small { width: 150px; height: 104px; bottom: 26px; }
   .chip--hours { right: 0; top: 18px; bottom: auto; font-size: 12.5px; }
   .badge { top: 70px; }
