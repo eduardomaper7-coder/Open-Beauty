@@ -211,3 +211,9 @@ html { scroll-padding-top: 100px; }
   .lp-mbar { grid-template-columns: 1fr 2fr; }
   .thanks__card { padding: 36px 22px; }
 }
+
+/* ---------- Ordenador (ratón): sin botones de llamar, solo en móvil/tablet ---------- */
+@media (hover: hover) and (pointer: fine) {
+  .lp-call, .lp-form__or { display: none !important; }
+  .lp-header__tel { pointer-events: none; cursor: default; }   /* el número se ve, pero no es un botón */
+}

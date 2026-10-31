@@ -12,6 +12,22 @@
 
   <!-- GOOGLE ADS: pega aquí la etiqueta global (gtag.js) y, debajo, el fragmento de evento de CONVERSIÓN.
        Esta página solo se ve tras enviar el formulario, así que cada visita = 1 lead. -->
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18495339279"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-18495339279');
+  </script>
+  <!-- Event snippet for Enviar formulario de oportunidad de venta conversion page -->
+  <script>
+    gtag('event', 'conversion', {
+        'send_to': 'AW-18495339279/oRvDCOflxK8dEI_2ofNE',
+        'value': 1.0,
+        'currency': 'EUR'
+    });
+  </script>
 </head>
 <body class="lp">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">

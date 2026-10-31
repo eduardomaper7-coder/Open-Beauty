@@ -7,10 +7,11 @@
   /* ---------- CONFIGURACIÓN (edita aquí) ---------- */
   const CONFIG = {
     email: 'openbeautybymg@gmail.com',            // destino de FormSubmit
-    offerEnd: '2026-10-31T23:59:59+01:00',        // fin de la oferta (hora de Madrid)
+    offerEnd: '2026-11-30T23:59:59+01:00',        // fin de la oferta (hora de Madrid)
     precio: 550,
     precioHabitual: null,                         // p. ej. 790 → muestra "Antes 790 € · Ahorras 240 €". null = oculto
-    gracias: 'gracias.html'                       // página de agradecimiento (conversión de Google Ads)
+    gracias: 'gracias.html',                      // página de agradecimiento (conversión de Google Ads)
+    convLlamada: 'AW-18495339279/dbCiCPSBxa8dEI_2ofNE'                             // send_to de la conversión de clic en el teléfono, p. ej. 'AW-18495339279/XXXX'
   };
 
   const LEGAL = {
@@ -28,6 +29,11 @@
     try { (window.dataLayer = window.dataLayer || []).push(Object.assign({ event }, params || {})); } catch (e) {}
   }
   $$('[data-track]').forEach(el => el.addEventListener('click', () => track('click_' + el.dataset.track)));
+  /* ---------- Conversión Google Ads: clic en llamar ---------- */
+  $$('a[href^="tel:"]').forEach(el => el.addEventListener('click', () => {
+    if (!CONFIG.convLlamada) return;
+    try { if (typeof window.gtag === 'function') window.gtag('event', 'conversion', { send_to: CONFIG.convLlamada, value: 1.0, currency: 'EUR' }); } catch (e) {}
+  }));
 
 
   /* ---------- Precio habitual (opcional) ---------- */
