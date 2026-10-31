@@ -1,5 +1,5 @@
 /* =========================================================
-   OPEN BEAUTY — Landing "Pack Armonía Octubre"
+   OPEN BEAUTY — Landing "Pack Armonía Noviembre"
    ========================================================= */
 (function () {
   'use strict';
