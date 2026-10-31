@@ -81,12 +81,12 @@
     const slots = [
       ['Hialurónico', state.ha[0]],
       ['Hialurónico', state.ha[1]],
-      ['Bótox', state.btx[0]]
+      ['Arrugas', state.btx[0]]
     ];
     list.innerHTML = slots.map(([t, z], i) =>
       `<li class="${z ? '' : 'is-empty'}"><span>${i + 1}</span> ${t} · ${z || 'elige zona'}</li>`).join('');
 
-    const chosen = [...state.ha.map(z => z + ' (hialurónico)'), ...state.btx.map(z => z + ' (bótox)')];
+    const chosen = [...state.ha.map(z => z + ' (hialurónico)'), ...state.btx.map(z => z + ' (arrugas de expresión)')];
     if (chosen.length) {
       fZonas.value = chosen.join(', ');
       miniTxt.textContent = [...state.ha, ...state.btx].join(' · ');
@@ -105,7 +105,7 @@
     $$('.zone-btn', g).forEach(b => b.addEventListener('click', () => {
       const z = b.dataset.zone, arr = state[key], i = arr.indexOf(z);
       if (i > -1) arr.splice(i, 1);
-      else if (max === 1) arr.splice(0, 1, z);           // bótox: sustituye
+      else if (max === 1) arr.splice(0, 1, z);           // arrugas: sustituye
       else if (arr.length < max) arr.push(z);
       else { arr.shift(); arr.push(z); }                  // hialurónico: rota la más antigua
       render();
